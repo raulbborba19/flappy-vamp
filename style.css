@@ -18,7 +18,7 @@
   width: 60px;
   position: absolute;
   bottom: 200px;
-  left: 50px
+  left: 50px;
   transition: bottom 0.1s linear;
 }
 
