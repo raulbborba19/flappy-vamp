@@ -1,5 +1,4 @@
 const vamp = document.querySelector(".vamp")
-const stake = document.querySelector(".stake")
 const startButton = document.querySelector(".start")
 const gameOverScreen = document.querySelector(".game-over")
 const scoreElement = document.querySelector(".score")
@@ -8,26 +7,17 @@ audioStart = new Audio("");
 const gameOverSound = new Audio("");
 
 let gameStarted = false;
+let birdPosition = 200;
+let birdVelocity = 0;
+const gravity = -0.5;
+const lift = 10; 
 
 const startGame = () => {
     gameStarted = true;
     audioStart.play();
 
-    stake.style.animation = "stake-animation 1.5s infine linear";
-
-    startButton.style.display = "none";
     vamp.style.opacity = "1";
     stake.style.opacity = "1";
-}
-
-
-const jump = () => {
-    vamp.classList.add("jump");
-
-    setTimeout(() => {
-        vamp.classList.remove("jump");
-    }
-    ,500);
 }
 
 const updateScore = () => {
