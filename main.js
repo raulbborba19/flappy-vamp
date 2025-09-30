@@ -22,6 +22,15 @@ const startGame = () => {
     vamp.style.opacity = "1";
 }
 
+const restartGame = () => {
+    window.location.reload();
+}
+
+const updateScore = () => {
+    score +=1;
+    scoreElement.textContent = score;
+}
+
 const vampJump = () => {
     if (!gameStarted) {
         startGame(); 
@@ -29,19 +38,29 @@ const vampJump = () => {
     vampVelocity = lift;
 }
 
-const updateScore = () => {
-    score +=1;
-    scoreElement.textContent = score;
-    const animationSpeed = 1.5/ (1 + score/500);
-    stake.style.animation = `stake-animation ${animationSpeed}s infinite linear`; 
-}
+const loop = setInterval(() => {
+    if (!gameStarted) return;
+
+    vampVelocity += gravity;
+    vampPosition += vampVelocity
+
+    if (vampPosition <= 0) {
+        vampPosition = 0;
+
+        clearInterval(loop);
+        gameOverScreen.style.display = "flex";
+    }
+
+    if (vampPosition >= boardHeight - vampWidth) {
+        vampPosition = boardHeight - vampWidth;
+        vampVelocity = 0;
+    }
+    
+    vamp.style.bottom = `${vampPosition}px`;
+}, 10);
 
 document.addEventListener("keydown", (e) => {
     if (e.key === " " || e.key === "ArrowUp") { 
         vampJump();
     }
 });
-
-const restartGame = () => {
-    window.location.reload();
-}
