@@ -3,7 +3,9 @@ const gameOverScreen = document.querySelector(".game-over")
 const scoreElement = document.querySelector(".score")
 const gameBoard = document.querySelector(".game-board")
 
-const JumpSound = new Audio(".")
+const jumpSound = new Audio("./sons/fabric-flap-80054.mp3");
+const scoreSound = new Audio("./sons/lighter-6324.mp3");
+const gameOverSound = new Audio("./sons/poof-80161.mp3");
 
 let gameStarted = false;
 let score = 0;
@@ -23,7 +25,6 @@ let activeStakes = []
 
 const startGame = () => {
     gameStarted = true;
-    audioStart.play();
 
     vamp.style.opacity = "1";
     createStakes();
@@ -70,6 +71,8 @@ const restartGame = () => {
 const updateScore = () => {
     score +=1;
     scoreElement.textContent = score;
+
+    scoreSound.play();
 }
 
 const vampJump = () => {
@@ -77,6 +80,8 @@ const vampJump = () => {
         startGame(); 
     }
     vampVelocity = lift;
+
+    jumpSound.play();
 }
 
 const loop = setInterval(() => {
@@ -86,7 +91,11 @@ const loop = setInterval(() => {
     vampPosition += vampVelocity
 
     if (vampPosition <= 0) {
-        vampPosition = 0;        clearInterval(loop);
+        vampPosition = 0;  
+        
+        gameOverSound.play();
+
+        clearInterval(loop);
         gameOverScreen.style.display = "flex";
     }
 
@@ -115,7 +124,7 @@ const loop = setInterval(() => {
             stake.xPosition + STAKE_WIDTH > 0
         ) {
             const topStakeHeight = stake.element.querySelector('.stake-top').offsetHeight;
-            const bottomStakeHeight = stake.element.querySelector('.stake-bottom').offsetHeigth;
+            const bottomStakeHeight = stake.element.querySelector('.stake-bottom').offsetHeight;
 
             const gapStartFromBottom = bottomStakeHeight;
 
@@ -127,7 +136,7 @@ const loop = setInterval(() => {
             const hitsBottom = vampBottomY < gapStartFromBottom;
             const hitsTop = vampTopY > gapEndFromBottom;
 
-            if (hitsBottom ** hitsTop) {
+            if (hitsBottom || hitsTop) {
                 clearInterval(loop)
                 gameOverScreen.style.display = 'flex';
                 activeStakes.forEach(s => s.element.style.animation = 'none');
