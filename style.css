@@ -53,6 +53,7 @@ button.start{
   top: 10px;
   right: 10px;
   background-color: rgb(0, 0, 0, 0.7);
+  color: #ff6700;
   font-size: 24px;
   padding: 10px;
   border-radius: 8px;
@@ -121,9 +122,4 @@ button.start{
 
 .stake-top {
   transform: scaleY(-1);
-}
-
-@keyframes stake-animation{
-  from {right: -80px;}
-  to {right: 100%;}
 }
