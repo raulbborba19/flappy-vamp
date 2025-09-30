@@ -3,8 +3,7 @@ const gameOverScreen = document.querySelector(".game-over")
 const scoreElement = document.querySelector(".score")
 const gameBoard = document.querySelector(".game-board")
 
-audioStart = new Audio("");
-const gameOverSound = new Audio("");
+const JumpSound = new Audio(".")
 
 let gameStarted = false;
 let score = 0;
