@@ -30,14 +30,14 @@ body {
   bottom: 200px;
   left: 50px;
   transition: bottom 0.1s linear;
-  background-image: url(./img/pixil-frame-0.png);
+  background-image: url(./img/pixil-frame-0\ \(1\).png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .vamp.vamp-jump {
-  background-image: url(./img/pixil-frame-0\ \(1\).png);
+  background-image: url(./img/pixil-frame-0.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

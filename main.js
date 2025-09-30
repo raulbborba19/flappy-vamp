@@ -92,6 +92,10 @@ const loop = setInterval(() => {
     vampVelocity += gravity;
     vampPosition += vampVelocity
 
+    if(vampVelocity < 0) {
+        vamp.classList.add9('vamp-jump');
+    }
+
     if (vampPosition <= 0) {
         vampPosition = 0;  
         
