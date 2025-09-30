@@ -1,3 +1,12 @@
+.body {
+  background-color: #1e1e1e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 100vh;
+  margin: 0;
+}
+
 *{
   margin: 0;
   padding: 0;
@@ -16,6 +25,7 @@
 
 .vamp {
   width: 60px;
+  height: 60px;
   position: absolute;
   bottom: 200px;
   left: 50px;
