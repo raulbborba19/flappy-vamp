@@ -31,11 +31,16 @@ body {
   left: 50px;
   transition: bottom 0.1s linear;
   background-image: url(./img/pixil-frame-0.png);
-  border-radius: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .vamp.vamp-jump {
   background-image: url(./img/pixil-frame-0\ \(1\).png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 button{
@@ -130,8 +135,10 @@ button.start{
 .stake {
   width: 100%;
   background-image: url(./img/pixil-frame-0\ \(2\).png);
-  background-size: cover;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
   box-sizing: border-box;
 }
 
