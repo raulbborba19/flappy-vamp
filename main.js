@@ -82,6 +82,8 @@ const vampJump = () => {
     vampVelocity = lift;
 
     jumpSound.play();
+
+    vamp.classList.add('vamp-jump');
 }
 
 const loop = setInterval(() => {

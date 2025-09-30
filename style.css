@@ -30,8 +30,12 @@ body {
   bottom: 200px;
   left: 50px;
   transition: bottom 0.1s linear;
-  background-color: #ff6700;
+  background-image: url(./img/pixil-frame-0.png);
   border-radius: 50%;
+}
+
+.vamp.vamp-jump {
+  background-image: url(./img/pixil-frame-0\ \(1\).png);
 }
 
 button{
@@ -125,8 +129,9 @@ button.start{
 
 .stake {
   width: 100%;
-  background-color: #ff6700;
-  border: 5px solid #1e1e1e;
+  background-image: url(./img/pixil-frame-0\ \(2\).png);
+  background-size: cover;
+  background-repeat: no-repeat;
   box-sizing: border-box;
 }
 
