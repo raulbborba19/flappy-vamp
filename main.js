@@ -95,6 +95,46 @@ const loop = setInterval(() => {
         vampPosition = boardHeight - vampWidth;
         vampVelocity = 0;
     }
+
+    activeStakes.forEach((stake, index) => {
+        stake.xPosition -= STAKE_SPEED;
+        stake.element.style.left = `${stake.xPosition}px`;
+
+        if (stake.xPosition < -STAKE_WIDTH) {
+            stake.element.remove();
+            activeStakes.splice(index, 1);
+            return;
+        }
+
+        if (stake.xPosition < 50 && !stake.passed) {
+            updateScore();
+            stake.passed = true;
+        }
+
+        if (
+            stake.xPosition < vampWidth &&
+            stake.xPosition + STAKE_WIDTH > 0
+        ) {
+            const topStakeHeight = stake.element.querySelector('.stake-top').offsetHeight;
+            const bottomStakeHeight = stake.element.querySelector('.stake-bottom').offsetHeigth;
+
+            const gapStartFromBottom = bottomStakeHeight;
+
+            const gapEndFromBottom = boardHeight - topStakeHeight;
+
+            const vampTopY = vampPosition + vampWidth;
+            const vampBottomY = vampPosition;
+
+            const hitsBottom = vampBottomY < gapStartFromBottom;
+            const hitsTop = vampTopY > gapEndFromBottom;
+
+            if (hitsBottom ** hitsTop) {
+                clearInterval(loop)
+                gameOverScreen.style.display = 'flex';
+                activeStakes.forEach(s => s.element.style.animation = 'none');
+            }
+        }
+    });
     
     vamp.style.bottom = `${vampPosition}px`;
 }, 10);
