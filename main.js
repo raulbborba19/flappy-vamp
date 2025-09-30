@@ -14,13 +14,55 @@ const gravity = -0.6;
 const lift = 10; 
 const vampWidth = 60;
 const boardHeight = 500;
+const STAKE_WIDTH = 80;
+const STAKE_GAP = 150;
+const STAKE_SPEED = 3;
+let stakeTimer = 2000;
+const STAKE_MIN_HEIGHT = 50;
+
+let activeStakes = []
 
 const startGame = () => {
     gameStarted = true;
     audioStart.play();
 
     vamp.style.opacity = "1";
+    createStakes();
 }
+
+const createStakes = () => {
+    const stakeInterval = setInterval(generateStake, stakeTimer);
+}
+
+const generateStake = () => {
+    const maxTopHeight = boardHeight - STAKE_GAP - STAKE_MIN_HEIGHT;
+
+    const topHeight = Math.floor(Math.random () * (maxTopHeight - STAKE_MIN_HEIGHT)) + STAKE_MIN_HEIGHT;
+
+    const bottomHeight = boardHeight - topHeight - STAKE_GAP;
+
+    const stakeContainer = document.createElement('div');
+    stakeContainer.classList.add('stake-container');
+
+    const topStake = document.createElement('div')
+    topStake.classList.add('stake', 'stake-top');
+    topStake.style.height = `${topHeight}px`;
+
+    const bottomStake = document.createElement('div')
+    bottomStake.classList.add('stake', 'stake-bottom');
+    bottomStake.style.height = `${bottomHeight}px`;
+
+    stakeContainer.appendChild(topStake);
+    stakeContainer.appendChild(bottomStake);
+
+    gameBoard.appendChild(stakeContainer);
+
+    activeStakes.push({
+        element: stakeContainer,
+        passed: false,
+        xPosition: gameBoard.offsetWidth
+    });
+};
 
 const restartGame = () => {
     window.location.reload();
@@ -45,9 +87,7 @@ const loop = setInterval(() => {
     vampPosition += vampVelocity
 
     if (vampPosition <= 0) {
-        vampPosition = 0;
-
-        clearInterval(loop);
+        vampPosition = 0;        clearInterval(loop);
         gameOverScreen.style.display = "flex";
     }
 
