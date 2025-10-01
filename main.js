@@ -12,14 +12,14 @@ let score = 0;
 let vampPosition = 200;
 let vampVelocity = 0;
 const gravity = -0.4;
-const lift = 10; 
+const lift = 9; 
 const vampWidth = 60;
 const boardHeight = 500;
 const STAKE_WIDTH = 80;
 const STAKE_GAP = 170;
 const STAKE_SPEED = 3;
 let stakeTimer = 2000;
-const STAKE_MIN_HEIGHT = 50;
+const STAKE_MIN_HEIGHT = 80;
 let stakeInterval;
 let loop;
 let activeStakes = []
@@ -101,11 +101,14 @@ const createStakes = () => {
 }
 
 const generateStake = () => {
-    const maxTopHeight = boardHeight - STAKE_GAP - STAKE_MIN_HEIGHT;
 
-    const topHeight = Math.floor(Math.random () * (maxTopHeight - STAKE_MIN_HEIGHT)) + STAKE_MIN_HEIGHT;
+    const availableHeight = boardHeight - STAKE_GAP - (STAKE_MIN_HEIGHT * 2);
 
-    const bottomHeight = boardHeight - topHeight - STAKE_GAP;
+    const randomHeight = Math.floor(Math.random() * availableHeight);
+
+    const topHeight = STAKE_MIN_HEIGHT + randomHeight; 
+
+    const bottomHeight = boardHeight - STAKE_GAP - topHeight; 
 
     const stakeContainer = document.createElement('div');
     stakeContainer.classList.add('stake-container');
