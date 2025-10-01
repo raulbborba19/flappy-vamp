@@ -21,6 +21,8 @@ const STAKE_SPEED = 3;
 let stakeTimer = 2000;
 const STAKE_MIN_HEIGHT = 50;
 
+let stakeInterval;
+let loop;
 let activeStakes = []
 
 const startGame = () => {
@@ -84,7 +86,7 @@ const vampJump = () => {
     jumpSound.play();
 }
 
-const loop = setInterval(() => {
+loop = setInterval(() => {
     if (!gameStarted) return;
 
     vampVelocity += gravity;
