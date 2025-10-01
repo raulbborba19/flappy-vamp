@@ -85,6 +85,7 @@ const startGame = () => {
 
             if (hitsBottom || hitsTop) {
                 clearInterval(loop)
+                clearInterval(stakeInterval);
                 gameOverScreen.style.display = 'flex';
                 activeStakes.forEach(s => s.element.style.animation = 'none');
             }
