@@ -20,7 +20,6 @@ const STAKE_GAP = 170;
 const STAKE_SPEED = 3;
 let stakeTimer = 2000;
 const STAKE_MIN_HEIGHT = 50;
-
 let stakeInterval;
 let loop;
 let activeStakes = []
@@ -30,10 +29,74 @@ const startGame = () => {
 
     vamp.style.opacity = "1";
     createStakes();
+
+    loop = setInterval(() => {
+    if (!gameStarted) return;
+
+    vampVelocity += gravity;
+    vampPosition += vampVelocity
+
+    if (vampPosition <= 0) {
+        vampPosition = 0;  
+        
+        gameOverSound.play();
+
+        clearInterval(loop);
+        clearInterval(stakeInterval);
+        gameOverScreen.style.display = "flex";
+    }
+
+    if (vampPosition >= boardHeight - vampWidth) {
+        vampPosition = boardHeight - vampWidth;
+        vampVelocity = 0;
+    }
+
+    activeStakes.forEach((stake, index) => {
+        stake.xPosition -= STAKE_SPEED;
+        stake.element.style.left = `${stake.xPosition}px`;
+
+        if (stake.xPosition < -STAKE_WIDTH) {
+            stake.element.remove();
+            activeStakes.splice(index, 1);
+            return;
+        }
+
+        if (stake.xPosition < 50 && !stake.passed) {
+            updateScore();
+            stake.passed = true;
+        }
+
+        if (
+            stake.xPosition < vampWidth &&
+            stake.xPosition + STAKE_WIDTH > 0
+        ) {
+            const topStakeHeight = stake.element.querySelector('.stake-top').offsetHeight;
+            const bottomStakeHeight = stake.element.querySelector('.stake-bottom').offsetHeight;
+
+            const gapStartFromBottom = bottomStakeHeight;
+
+            const gapEndFromBottom = boardHeight - topStakeHeight;
+
+            const vampTopY = vampPosition + vampWidth;
+            const vampBottomY = vampPosition;
+
+            const hitsBottom = vampBottomY < gapStartFromBottom;
+            const hitsTop = vampTopY > gapEndFromBottom;
+
+            if (hitsBottom || hitsTop) {
+                clearInterval(loop)
+                gameOverScreen.style.display = 'flex';
+                activeStakes.forEach(s => s.element.style.animation = 'none');
+            }
+        }
+    });
+    
+    vamp.style.bottom = `${vampPosition}px`;
+}, 10);
 }
 
 const createStakes = () => {
-    const stakeInterval = setInterval(generateStake, stakeTimer);
+    stakeInterval = setInterval(generateStake, stakeTimer);
 }
 
 const generateStake = () => {
@@ -85,69 +148,6 @@ const vampJump = () => {
 
     jumpSound.play();
 }
-
-loop = setInterval(() => {
-    if (!gameStarted) return;
-
-    vampVelocity += gravity;
-    vampPosition += vampVelocity
-
-    if (vampPosition <= 0) {
-        vampPosition = 0;  
-        
-        gameOverSound.play();
-
-        clearInterval(loop);
-        gameOverScreen.style.display = "flex";
-    }
-
-    if (vampPosition >= boardHeight - vampWidth) {
-        vampPosition = boardHeight - vampWidth;
-        vampVelocity = 0;
-    }
-
-    activeStakes.forEach((stake, index) => {
-        stake.xPosition -= STAKE_SPEED;
-        stake.element.style.left = `${stake.xPosition}px`;
-
-        if (stake.xPosition < -STAKE_WIDTH) {
-            stake.element.remove();
-            activeStakes.splice(index, 1);
-            return;
-        }
-
-        if (stake.xPosition < 50 && !stake.passed) {
-            updateScore();
-            stake.passed = true;
-        }
-
-        if (
-            stake.xPosition < vampWidth &&
-            stake.xPosition + STAKE_WIDTH > 0
-        ) {
-            const topStakeHeight = stake.element.querySelector('.stake-top').offsetHeight;
-            const bottomStakeHeight = stake.element.querySelector('.stake-bottom').offsetHeight;
-
-            const gapStartFromBottom = bottomStakeHeight;
-
-            const gapEndFromBottom = boardHeight - topStakeHeight;
-
-            const vampTopY = vampPosition + vampWidth;
-            const vampBottomY = vampPosition;
-
-            const hitsBottom = vampBottomY < gapStartFromBottom;
-            const hitsTop = vampTopY > gapEndFromBottom;
-
-            if (hitsBottom || hitsTop) {
-                clearInterval(loop)
-                gameOverScreen.style.display = 'flex';
-                activeStakes.forEach(s => s.element.style.animation = 'none');
-            }
-        }
-    });
-    
-    vamp.style.bottom = `${vampPosition}px`;
-}, 10);
 
 document.addEventListener("keydown", (e) => {
     if (e.key === " " || e.key === "ArrowUp") { 
