@@ -36,13 +36,6 @@ body {
   background-position: center;
 }
 
-.vamp.vamp-jump {
-  background-image: url(./img/pixil-frame-0.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
 button{
   background: #36014b;
   color: #fff;
@@ -138,7 +131,7 @@ button.start{
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-color: transparent;
-  border: none;
+  border: 3px solid #ff4d4d;
   box-sizing: border-box;
 }
 
